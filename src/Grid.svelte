@@ -1,6 +1,5 @@
 <script>
 import {board, clickCell, isWinner} from './logic.js';
-
 </script>
 <style>
 .grid {

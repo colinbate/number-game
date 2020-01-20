@@ -1,4 +1,8 @@
 import {writable} from 'svelte/store';
+import {save, load} from './storage.js';
+
+const BOARD_KEY = 'currentBoard';
+const EMPTY_KEY = 'currentEmpty';
 
 const gameBoard = [
   [1, 5, 9, 13],
@@ -63,6 +67,8 @@ function randomMove() {
 
 function update() {
   board.set(flatten(gameBoard));
+  save(BOARD_KEY, gameBoard);
+  save(EMPTY_KEY, empty);
 }
 
 function getMove(x, y) {
@@ -119,6 +125,25 @@ function shuffleBoard() {
   }
 }
 
+function initialize() {
+  const loaded = load(BOARD_KEY);
+  if (loaded) {
+    const loadEmpty = load(EMPTY_KEY);
+    if (loadEmpty) {
+      gameBoard[0] = loaded[0];
+      gameBoard[1] = loaded[1];
+      gameBoard[2] = loaded[2];
+      gameBoard[3] = loaded[3];
+      empty[0] = loadEmpty[0];
+      empty[1] = loadEmpty[1];
+    } else {
+      shuffleBoard();
+    }
+  } else {
+    shuffleBoard();
+  }
+}
+
 export function randomize() {
   shuffleBoard();
   update();
@@ -133,6 +158,6 @@ export function clickCell(x, y) {
   update();
 }
 
-shuffleBoard();
+initialize();
 export const isWinner = writable(false);
 export const board = writable(flatten(gameBoard));

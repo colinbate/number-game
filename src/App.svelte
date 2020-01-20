@@ -21,9 +21,19 @@ button {
 	font-size: 1.5rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+h1 {
+	margin: 0;
+}
+p {
+	max-width: 100%;
+	width: 20rem;
+	text-align: center;
+}
 </style>
 
 <div class="app">
+	<h1>Number Squares</h1>
+	<p>Click/tap a number to move it into the empty square</p>
 	<Grid/>
 	<button type="button" on:click={randomize}>Scramble</button>
 </div>
