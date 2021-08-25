@@ -1,6 +1,8 @@
 <script>
 import Grid from './Grid.svelte';
-import {randomize} from './logic.js';
+import Confetti from './Confetti.svelte';
+import {randomize, isWinner} from './logic.js';
+import { fade } from 'svelte/transition';
 </script>
 <style>
 .app {
@@ -20,6 +22,7 @@ button {
 	font-weight: bold;
 	font-size: 1.5rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 10px 20px rgba(0, 0, 0, 0.2);
+	z-index: 100;
 }
 h1 {
 	margin: 0;
@@ -29,8 +32,15 @@ p {
 	width: 20rem;
 	text-align: center;
 }
-</style>
 
+.celebrate {
+	position: absolute;
+	inset: 0;
+}
+</style>
+{#if $isWinner}
+<div class="celebrate" out:fade><Confetti/></div>
+{/if}
 <div class="app">
 	<h1>Number Squares</h1>
 	<p>Click/tap a number to move it into the empty square</p>
